@@ -1,4 +1,25 @@
-<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-  <textarea>{{data.text}}</textarea>
+<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [style.background-color]="bgColor">
+  <div>
+    <textarea>{{data.text}}</textarea>
+  </div>
+  <div>
+    <span>
+      <button [matMenuTriggerFor]="colorSelector" mat-icon-button>
+        <mat-icon>palette</mat-icon>
+      </button>
+      <mat-menu #colorSelector class="color-selector">
+        <ng-container *ngFor="let color of colorAssets">
+          <button mat-menu-item (click)="changeColor(color.colorCode)">
+            <mat-icon [style.color]="color.colorCode">circle</mat-icon>
+          </button>
+        </ng-container>
+      </mat-menu>
+    </span>
+    <span>
+      <button mat-icon-button (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+  </div>
 </div>
 

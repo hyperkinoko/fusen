@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import {FUSEN_COLORS, FusenData} from './fusen-data';
 
 @Component({
   selector: 'app-fusen',
@@ -6,11 +7,22 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./fusen.component.scss']
 })
 export class FusenComponent implements OnInit {
-  @Input() data;
+  @Input() data: FusenData;
+  bgColor: string;
+  colorAssets = FUSEN_COLORS;
 
   constructor() { }
 
   ngOnInit() {
+    this.bgColor = this.colorAssets.find(c => c.id === this.data.colorId).colorCode;
+  }
+  
+  changeColor(color: string) {
+    this.bgColor = color;
+  }
+  
+  delete() {
+  
   }
 
 }
