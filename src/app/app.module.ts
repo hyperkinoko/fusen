@@ -11,9 +11,10 @@ import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-// import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
-// import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,11 +31,12 @@ import {environment} from '../environments/environment';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFirestoreModule
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    FormsModule
   ],
   entryComponents: [FusenComponent],
-  // providers: [AngularFirestore],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

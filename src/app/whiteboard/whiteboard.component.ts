@@ -5,7 +5,7 @@ import {Fusen} from '../fusen/fusen';
 import {FusenDirective} from '../fusen/fusen.directive';
 import {FusenData} from '../fusen/fusen-data';
 import {Observable} from 'rxjs';
-// import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-whiteboard',
@@ -15,13 +15,13 @@ import {Observable} from 'rxjs';
 export class WhiteboardComponent implements OnInit, InteractionInterface {
   @ViewChild(FusenDirective, {static: true}) fusenHost: FusenDirective;
 
-  // fusenData: Observable<FusenData[]> = this.firestore.collection<FusenData>('whiteboards/hoge/stickynotes').valueChanges();
+  fusenData: Observable<FusenData[]> = this.firestore.collection<FusenData>('whiteboards/hoge/stickynotes').valueChanges({idField: 'id'});
   componentsReferences: ComponentRef<FusenComponent>[] = [];
   
   constructor(
     private fusenService: FusenService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    // private firestore: AngularFirestore
+    private firestore: AngularFirestore
   ) { }
 
   ngOnInit() {
@@ -29,13 +29,19 @@ export class WhiteboardComponent implements OnInit, InteractionInterface {
   }
 
   loadFusen() {
-    // this.fusenData.subscribe(data => data.forEach((fusen) => {
-    //   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FusenComponent);
-    //   const viewContainerRef = this.fusenHost.viewContainerRef;
-    //   const componentRef: ComponentRef<FusenComponent> = viewContainerRef.createComponent(componentFactory);
-    //   componentRef.instance.compInteraction = this;
-    //   this.componentsReferences.push(componentRef);
-    // }));
+    this.fusenData.subscribe(data => {
+      
+      data.forEach((fusen) => {
+        if (!this.componentsReferences.find(ref => ref.instance.id === fusen.id)) {
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FusenComponent);
+          const viewContainerRef = this.fusenHost.viewContainerRef;
+          const componentRef: ComponentRef<FusenComponent> = viewContainerRef.createComponent(componentFactory);
+          componentRef.instance.id = fusen.id;
+          componentRef.instance.compInteraction = this;
+          this.componentsReferences.push(componentRef);
+        }
+      });
+    });
   }
   
   remove(id: string) {
