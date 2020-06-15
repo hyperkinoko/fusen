@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "stickynotewhiteboard": {
+      "hosting": {
+        "fusen": [
+          "stickynotewhiteboard"
+        ]
+      }
+    }
+  }
+}

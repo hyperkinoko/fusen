@@ -7,6 +7,8 @@ export interface FusenData {
   id: string;
   text: string;
   colorId: string;
+  left: number;
+  top: number;
 }
 
 export const FUSEN_COLORS: FusenColor[] = [

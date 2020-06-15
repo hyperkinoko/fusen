@@ -9,6 +9,9 @@ import { FusenComponent } from './fusen/fusen.component';
 import { FusenDirective } from './fusen/fusen.directive';
 import { WhiteboardComponent } from './whiteboard/whiteboard.component';
 import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
+// import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+// import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,11 @@ import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    // AngularFireModule.initializeApp(environment.firebase),
+    // AngularFirestoreModule
   ],
   entryComponents: [FusenComponent],
-  providers: [],
+  // providers: [AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

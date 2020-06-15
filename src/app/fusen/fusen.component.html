@@ -1,6 +1,6 @@
-<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [style.background-color]="bgColor">
+<div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [ngStyle]="style">
   <div>
-    <textarea>{{data.text}}</textarea>
+    <textarea>{{(data | async).text}}</textarea>
   </div>
   <div>
     <span>
@@ -16,7 +16,7 @@
       </mat-menu>
     </span>
     <span>
-      <button mat-icon-button (click)="delete()">
+      <button mat-icon-button (click)="remove()">
         <mat-icon>delete</mat-icon>
       </button>
     </span>
