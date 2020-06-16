@@ -15,7 +15,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 export class WhiteboardComponent implements OnInit, InteractionInterface {
   @ViewChild(FusenDirective, {static: true}) fusenHost: FusenDirective;
 
-  fusenData: Observable<FusenData[]> = this.firestore.collection<FusenData>('whiteboards/hoge/stickynotes').valueChanges({idField: 'id'});
+  fusenData: Observable<FusenData[]> = this.firestore.collection<FusenData>('whiteboards/hoge/stickynotes').valueChanges();
   componentsReferences: ComponentRef<FusenComponent>[] = [];
   
   constructor(
@@ -57,17 +57,18 @@ export class WhiteboardComponent implements OnInit, InteractionInterface {
     this.componentsReferences = this.componentsReferences.filter(ref => ref.instance.id !== id);
     console.log(this.componentsReferences);
     
-    // Todo: データベースから削除
+    this.firestore.collection('whiteboards/hoge/stickynotes').doc(id).delete();
   }
   
   createFusen() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FusenComponent);
-    const viewContainerRef = this.fusenHost.viewContainerRef;
-    const componentRef: ComponentRef<FusenComponent> = viewContainerRef.createComponent(componentFactory);
-    componentRef.instance.compInteraction = this;
-    this.componentsReferences.push(componentRef);
-    console.log(this.componentsReferences);
-    
-    // Todo: データベースへ追加
+    const id = this.firestore.createId();
+    const fusen: FusenData = {
+      id: id,
+      left: 10,
+      text: '',
+      top: 10,
+      colorId: 'red'
+    };
+    this.firestore.collection('whiteboards/hoge/stickynotes').doc(id).set(fusen);
   }
 }
